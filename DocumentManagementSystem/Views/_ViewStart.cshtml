@@ -1,0 +1,12 @@
+﻿@{
+    var controller = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ControllerName;//.ActionName;
+    if (controller.ToLower() == "home" || controller.ToLower() == "account")
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_AdminLayout";
+    }
+}
+

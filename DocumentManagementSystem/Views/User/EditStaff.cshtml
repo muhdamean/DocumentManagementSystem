@@ -1,0 +1,161 @@
+﻿@model EditStaffViewModel
+
+@{
+    ViewBag.Title = "Update Staff";
+    var photoPath = "~/images/" + (Model.OldPhotoPath ?? "no-image.jpg");
+}
+
+<h4 class="text-primary">Update Staff</h4>
+<div class="col-sm-9">
+    <div class="card p-3">
+        <form method="post" enctype="multipart/form-data" class="mt-3">
+            <div class="form-group row" hidden>
+                <label asp-for="Id" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Id" readonly class="form-control" />
+                    <input asp-for="InitialLga" readonly class="form-control" value="@Model.Lga" />
+                    <input asp-for="OldPhotoPath" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Email" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Name" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PhoneNumber" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="DOB" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <input asp-for="DOB" class="form-control" />
+                    <span asp-validation-for="DOB" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Gender" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(x => Model.Gender, new SelectList(ViewBag.Gender, "Value", "Text", Model.Gender), htmlAttributes: new { @class = "form-control", id = "Gender" })
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Department" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(x => Model.Department, new SelectList(ViewBag.Department, "Value", "Text", Model.Department), htmlAttributes: new { @class = "form-control", id = "Department" })
+                    <span asp-validation-for="Department" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="State" class="col-form-label col-sm-2"></label>
+                @*<input asp-for="State" class="form-control" />*@
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(x => Model.State, new SelectList(ViewBag.State, "Value", "Text", Model.State), htmlAttributes: new { @class = "form-control", id = "State" })
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Lga" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <select asp-for="Lga" asp-items="ViewBag.Lga" class="form-control" id="lga">
+                        <option value="@Model.Lga">@Model.Lga</option>
+                    </select>
+                    <span asp-validation-for="Lga" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Address" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="PhotoPath" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <input asp-for="PhotoPath" accept="image/*" class="form-control" />
+                    <span asp-validation-for="PhotoPath" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="OldPhotoPath" class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <img src="@photoPath" asp-append-version="true" width="200" height="200" />
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-sm-10 offset-2">
+                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                    <a asp-action="index" class="btn btn-warning btn-sm">Cancel</a>
+                </div>
+            </div>
+            @*manage roles*@
+            <div class="col-sm-10 offset-2">
+                <div class="card mt-2">
+                    <div class="card-header">
+                        User Roles
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Roles.Any())
+                        {
+                            foreach (var role in Model.Roles)
+                            {
+                                <h6 class="card-title">@role</h6>
+                            }
+                        }
+                        else
+                        {
+                            <h5>None at the moment</h5>
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <a asp-action="ManageUserRoles" asp-controller="admin" asp-route-userId="@Model.Id" class="btn btn-primary btn-sm">Manage Roles</a>
+                    </div>
+                </div>
+            </div>
+            @*manage claims*@
+            <div class="col-sm-10 offset-2">
+                <div class="card mt-2">
+                    <div class="card-header">
+                        User Claims
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Claims.Any())
+                        {
+                            foreach (var claim in Model.Claims)
+                            {
+                                <h6 class="card-title">@claim</h6>
+                            }
+                        }
+                        else
+                        {
+                            <h5>None at the moment</h5>
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <a asp-action="ManageUserClaims" asp-controller="admin" asp-route-userId="@Model.Id" class="btn btn-primary btn-sm">Manage Claims</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+@section Scripts{
+    <script src="~/js/custom-script.js"></script>
+}

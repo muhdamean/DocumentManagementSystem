@@ -1,0 +1,104 @@
+﻿@model DocumentCommentViewModel
+
+@{
+    ViewBag.Title = "Docs by Department";
+}
+<div class="">
+    <h4 class="h5 text-primary">Document By Department</h4>
+    <a asp-controller="document" asp-action="upload" class="btn btn-primary btn-sm mb-2">Upload New Document</a>
+    @if (TempData["message"] != null)
+    {
+        <div classs="container p-0 ">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    }
+   
+    @if (Model.GetDocumentsViewModel.Any())
+    {
+        <div class="card-block mt-1">
+            <ul class="feed-blog ">
+                @foreach (var item in Model.GetDocumentsViewModel)
+                {
+                    var photoPath = "../../images/";
+                    if (!string.IsNullOrWhiteSpace(item.UploadedBy))
+                    {
+                        photoPath += item.Passport;
+                    }
+                    else
+                    {
+                        photoPath += "no-image.jpg";
+                    }
+                    <li class="active-feed pt-1">
+                        <div class="feed-user-img">
+                            <img src="@photoPath" class="img-radius" alt="User-Profile-Image">
+                        </div>
+                        <h6><span class="label label-danger">@item.Type</span> @item.UserName (@item.Email) new files: <small class="text-muted">@item.Date.ToShortDateString()</small></h6>
+                        <p class="m-b-15 m-t-15">@item.UploadComment</p>
+                        <div class="row">
+                            <div class="col-auto">
+                                <h6>@item.Name</h6>
+                                <p>@item.UploadComment</p>
+                                <br />
+                                <p>
+                                    <button class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#@item.Id">
+                                        Comments
+                                    </button>
+                                    <a asp-action="addComment" asp-route-id="@item.Id" class="btn btn-success btn-sm">Add Comment</a>
+                                </p>
+                                <div class="collapse" id="@item.Id">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                @if (Model.GetCommentsViewModel.Any())
+                                                {
+                                                    @foreach (var comment in Model.GetCommentsViewModel.Where(x => x.DocumentId == item.Id))
+                                                    {
+                                                        <ul>
+                                                            <li class="active-feed pt-1">
+                                                                <div class="feed-user-img">
+                                                                    <img src="@photoPath" class="img-radius" alt="User-Comment-Profile-Image">
+                                                                </div>
+                                                                <h6> @comment.UserName (@comment.UserEmail) : <small class="text-muted">@item.Date.ToShortDateString()</small></h6>
+                                                                <p class="m-b-15 m-t-15">@comment.UserComment</p>
+                                                            </li>
+                                                        </ul>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div>No comment available, <a asp-action="addComment" asp-route-id="@item.Id">Click here to add comment</a></div>
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                No document available
+            </div>
+            <div class="card-body">
+                Use the button below to upload document
+            </div>
+            <div class="card-footer">
+                <a asp-action="upload" asp-controller="document" class="btn btn-primary btn-sm">Upload Document</a>
+            </div>
+        </div>
+    }
+
+
+</div>

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<DocumentViewModel>
+
+@{
+    ViewBag.Title = "Documents";
+}
+<div class="">
+    <h4 class="h5 text-primary">Documents</h4>
+    <a asp-controller="document" asp-action="upload" class="btn btn-primary btn-sm mb-2">Upload New Document</a>
+    @if (TempData["message"] != null)
+    {
+        <div classs="container p-0 ">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    }
+    @if (Model.Any())
+    {
+
+        <table class=" table table-hover table-responsive-sm table-responsive table-xs">
+            <thead>
+                <tr>
+                    <td hidden>#</td>
+                    <td>Name</td>
+                    <td>Type</td>
+                    <td>Size</td>
+                    @*<td>Status</td>*@
+                    <td>UploadedBy</td>
+                    <td>Date</td>
+                    <td>Download</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var document in Model)
+                {
+                    <tr>
+                        <td hidden>@document.Id</td>
+                        <td>@document.Name</td>
+                        <td>@document.Type</td>
+                        <td>@document.Size KB</td>
+                        @*<td>@document.Status</td>*@
+                        <td>@document.UploadedBy</td>
+                        <td>@document.Date.ToShortDateString()</td>
+                        <td>
+                            <form asp-action="DownloadFile" asp-route-id="@document.Id" method="get">
+
+                                <button  type="submit"  class="btn btn-info btn-sm">Download</button>
+
+                            </form>
+                            @*<form asp-action="deleteDepartments" asp-route-id="@document.Id" method="post">
+                                    <a asp-action="editDepartment" asp-controller="department" asp-route-id="@document.Id" class="btn btn-primary btn-sm mr-2">Edit</a>
+                                    <span id="confirmDeleteSpan_@document.Id" style="display:none;">
+                                        <span>Confirm delete?</span>
+                                        <button type="submit" class="btn btn-danger btn-sm">Yes</button>
+                                        <a href="#" class="btn btn-primary btn-sm" onclick="confirmDelete('@document.Id', false);">No</a>
+                                    </span>
+                                    <span id="deleteSpan_@document.Id">
+                                        <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('@document.Id', true);">Delete</a>
+                                    </span>
+                                </form>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                No document available
+            </div>
+            <div class="card-body">
+                Use the button below to upload document
+            </div>
+            <div class="card-footer">
+                <a asp-action="upload" asp-controller="document" class="btn btn-primary btn-sm">Upload Document</a>
+            </div>
+        </div>
+    }
+
+
+</div>
+
+@section Scripts{
+    <script>
+        jQuery(document).ready(function () {
+            $("#btnDownload").click(function () {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "Download/DownloadFile", true);
+                xhr.responseType = "blob";
+                xhr.onload = function (e) {
+                    if (this.status == 200) {
+                        var blob = this.response;
+                        /* Get filename from Content-Disposition header */
+                        var filename = "";
+                        var disposition = xhr.getResponseHeader('Content-Disposition');
+                        if (disposition && disposition.indexOf('attachment') !== -1) {
+                            var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                            var matches = filenameRegex.exec(disposition);
+                            if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                        }
+                        // This does the trick
+                        var a = document.createElement('a');
+                        a.href = window.URL.createObjectURL(blob);
+                        a.download = filename;
+                        a.dispatchEvent(new MouseEvent('click'));
+                    }
+                }
+                xhr.send();
+            });
+        });
+    </script>
+}

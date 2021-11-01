@@ -1,0 +1,95 @@
+﻿@model CreateStaffViewModel
+
+@{
+    ViewBag.Title = "Add Staff";
+}
+
+
+<div class="col-sm-8 card">
+    <h4 class="mt-2 text-primary">Add New Staff</h4>
+    <form method="post" enctype="multipart/form-data" class="mt-2">
+        <div class="form-group row">
+            <label asp-for="Email" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Name" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="PhoneNumber" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="DOB" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="DOB" class="form-control" />
+                <span asp-validation-for="DOB" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Gender" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                @Html.DropDownListFor(x => Model.Gender, new SelectList(ViewBag.Gender, "Value", "Text", ""), htmlAttributes: new { @class = "form-control", id = "Gender" })
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Department" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                @Html.DropDownListFor(x => Model.Department, new SelectList(ViewBag.Department, "Value", "Text", ""), htmlAttributes: new { @class = "form-control", id = "Department" })
+                <span asp-validation-for="Department" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="State" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                @*<input asp-for="State" class="form-control" />*@
+                @Html.DropDownListFor(x => Model.State, new SelectList(ViewBag.State, "Value", "Text", ""), htmlAttributes: new { @class = "form-control", id = "State" })
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Lga" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <select asp-for="Lga" asp-items="ViewBag.Lga" class="form-control" id="lga">
+                </select>
+                <span asp-validation-for="Lga" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Address" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="PhotoPath" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input asp-for="PhotoPath" accept="image/*" class="form-control" />
+                <span asp-validation-for="PhotoPath" class="text-danger"></span>
+            </div>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-sm-10 offset-2">
+                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                <a asp-action="index" class="btn btn-warning btn-sm">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script src="~/js/custom-script.js"></script>
+}

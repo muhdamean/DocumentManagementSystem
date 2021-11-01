@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewBag.Title = "Staff";
+}
+
+<div class="">
+    <h4 class="h5">Staff</h4>
+    <a asp-controller="user" asp-action="createstaff" class="btn btn-primary btn-sm mb-2">Add Staff</a>
+    @if (TempData["message"] != null)
+    {
+        <div classs="container p-0 ">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    }
+    @if (Model.Any())
+    {
+<div class="card">
+    <table class="table table-responsive table-xs">
+        <thead>
+            <tr>
+                <td hidden>#</td>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Phone Number</td>
+                <td>Department</td>
+                <td>Edit/Delete</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td hidden>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@user.Department</td>
+                    <td>
+                        <form asp-action="deleteUser" asp-route-id="@user.Id" method="post">
+                            @*@if ((await authorizationService.AuthorizeAsync(User, "EditRolePolicy")).Succeeded)
+                                {*@
+                            <a asp-controller="user" asp-action="editStaff" asp-route-id="@user.Id" class="btn btn-primary btn-sm mr-2">Edit</a>
+                            @*}*@
+
+
+                            <span id="confirmDeleteSpan_@user.Id" style="display:none;">
+                                <span>Confirm delete?</span>
+                                <button type="submit" class="btn btn-danger btn-sm">Yes</button>
+                                <a href="#" class="btn btn-primary btn-sm" onclick="confirmDelete('@user.Id', false);">No</a>
+                            </span>
+                            <span id="deleteSpan_@user.Id">
+                                <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('@user.Id', true);">Delete</a>
+                            </span>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                No users created yet
+            </div>
+            <div class="card-body">
+                Use the button below to create user
+            </div>
+            <div class="card-footer">
+                <a asp-action="createStaff" asp-controller="user" class="btn btn-primary btn-sm">Add Staff</a>
+            </div>
+        </div>
+    }
+    @section Scripts{
+        <script type="text/javascript">
+            function confirmDelete(uniqueId, isDeleteClicked) {
+                var deleteSpan = 'deleteSpan_' + uniqueId;
+                var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
+                if (isDeleteClicked) {
+                    $('#' + deleteSpan).hide();
+                    $('#' + confirmDeleteSpan).show();
+                }
+                else {
+                    $('#' + deleteSpan).show();
+                    $('#' + confirmDeleteSpan).hide();
+                }
+            }
+        </script>
+    }
+</div>

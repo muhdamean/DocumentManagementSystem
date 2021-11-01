@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="e-document management system." />
+    <meta name="keywords" content="e-Document management system" />
+    <meta name="author" content="...">
+    <!-- Favicon icon -->
+    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap/css/bootstrap.min.css">
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" href="../../assets/icon/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/icon/font-awesome/css/font-awesome.min.css">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" href="../../assets/icon/icofont/css/icofont.css">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="../../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/jquery.mCustomScrollbar.css">
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+    <style type="text/css">
+        .blink {
+            animation: blinker 1s step-start infinite;
+        }
+
+        @@keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+    <style>
+
+
+        .title {
+            font-family: "Montserrat";
+            text-align: center;
+            color: #FFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            letter-spacing: 1px;
+        }
+
+        .h1-text {
+            background-image: url(https://media.giphy.com/media/26BROrSHlmyzzHf3i/giphy.gif);
+            background-size: cover;
+            color: transparent;
+            -moz-background-clip: text;
+            -webkit-background-clip: text;
+            text-transform: uppercase;
+            font-size: 50px;
+            line-height: .75;
+            margin: 10px 0;
+        }
+
+        .h6-text {
+            background-image: url(https://media.giphy.com/media/26BROrSHlmyzzHf3i/giphy.gif);
+            background-size: cover;
+            color: white;
+            -moz-background-clip: text;
+            -webkit-background-clip: text;
+            font-size: 20px;
+            line-height: .75;
+            margin: 10px 0;
+        }
+        /* styling my button */
+
+        .white-mode {
+            text-decoration: none;
+            padding: 7px 10px;
+            background-color: #122;
+            border-radius: 3px;
+            color: #FFF;
+            transition: .35s ease-in-out;
+            position: absolute;
+            left: 15px;
+            bottom: 15px;
+            font-family: "Montserrat";
+        }
+
+            .white-mode:hover {
+                background-color: #FFF;
+                color: #122;
+            }
+    </style>
+</head>
+<body>
+    <div class="fixed-button">
+        <a href="#!" target="_blank" class="btn btn-md btn-primary">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Contact Us
+        </a>
+    </div>
+    <!-- Pre-loader start -->
+    <div class="theme-loader">
+        <div class="loader-track">
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+    <!-- Pre-loader end -->
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+            <div>
+
+            </div>
+            <nav class="navbar header-navbar pcoded-header">
+                <div class="navbar-wrapper ">
+                    <div class="container">
+                        <div class="navbar-logo">
+                            <a asp-action="index" asp-controller="home">
+                                <div class="blink"><strong>e-Doc&nbsp;Management&nbsp;System</strong></div>
+                                @*<img class="img-fluid" src="../../assets/images/logo.png" alt="Theme-Logo" />*@
+                            </a>
+                            <a class="mobile-options">
+                                <i class="ti-more"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="navbar-container  ">
+                        <ul class="nav-left">
+                            <li>
+                                <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
+                            </li>
+
+                        </ul>
+                        <ul class="nav-right">
+                            @*<li class="">
+                                    <a href="#">About</a>
+                                </li>
+                                <li class="">
+                                    <a href="#">Contact</a>
+                                </li>*@
+                            <li>
+                                <a asp-action="signin" asp-controller="account">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Sign In</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-action="signup" asp-controller="account">
+                                    <span class="pcoded-micon"><i class="ti-user"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Sign Up</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="pcoded-main-container ">
+                <div class="pcoded-wrapper">
+                    <div class="">
+                        <div class="">
+                            <div class="">
+                                <div class="page-wrapper">
+                                    <div>
+                                        @RenderBody()
+                                    </div>
+                                </div>
+
+                                <div id="styleSelector">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../../assets/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/popper.js/popper.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="../../assets/js/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <!-- modernizr js -->
+    <script type="text/javascript" src="../../assets/js/modernizr/modernizr.js"></script>
+    <!-- am chart -->
+    <script src="../../assets/pages/widget/amchart/amcharts.min.js"></script>
+    <script src="../../assets/pages/widget/amchart/serial.min.js"></script>
+    <!-- Chart js -->
+    <script type="text/javascript" src="../../assets/js/chart.js/Chart.js"></script>
+    <!-- Todo js -->
+    <script type="text/javascript " src="../../assets/pages/todo/todo.js "></script>
+    <!-- Custom js -->
+    <script type="text/javascript" src="../../assets/pages/dashboard/custom-dashboard.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/script.js"></script>
+    <script type="text/javascript " src="../../assets/js/SmoothScroll.js"></script>
+    <script src="../../assets/js/pcoded.min.js"></script>
+    <script src="../../assets/js/vartical-demo.js"></script>
+    <script src="../../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script src="~/js/custom-script.js"></script>
+    @*<div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>*@
+
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - DocumentManagementSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>*@
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

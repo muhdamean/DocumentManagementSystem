@@ -1,0 +1,36 @@
+﻿@model DocumentViewModel
+
+@{
+    ViewBag.Title = "Document Status";
+}
+
+<div class="col-sm-5 card p-3">
+    <h5 class="text-primary">Update Document Status</h5>
+    <form method="post" class="mt-2">
+        <div class="form-group" hidden>
+            <input asp-for="Id" class="col-form-label" />
+        </div>
+        @*<div class="form-group">
+            <label asp-for="Status" class="col-form-label"></label>
+            <input asp-for="Status" class="form-control" />
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>*@
+        <div class="form-group">
+            <small id="emailHelp" class="form-text text-muted">Select status for the document.</small>
+            @Html.DropDownListFor(x => Model.Status, new SelectList(ViewBag.Status, "Value", "Text", Model.Status), htmlAttributes: new { @class = "form-control", id = "Status" })
+
+        </div>
+        <div class="form-group">
+            <small id="emailHelp" class="form-text text-muted">Only select department when restricting document to a specific department.</small>
+            @Html.DropDownListFor(x => Model.Department, new SelectList(ViewBag.Department, "Value", "Text", Model.Department), htmlAttributes: new { @class = "form-control", id = "Department" })
+
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <div class="">
+                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                <a asp-action="documents" class="btn btn-warning btn-sm">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>

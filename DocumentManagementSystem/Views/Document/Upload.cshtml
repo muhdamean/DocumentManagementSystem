@@ -1,0 +1,56 @@
+﻿@model DocumentViewModel
+
+@{
+    ViewBag.Title = "Upload Document";
+}
+
+<div class="col-sm-12">
+    <div class="card p-3">
+        <form method="post" enctype="multipart/form-data">
+            <h5 class="text-primary">Upload New Document</h5>
+            <div class="form-group">
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <div id="uploadFile_div">
+                        <input asp-for="DocumentUpload" multiple class="form-control" />
+                        <span asp-validation-for="DocumentUpload" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <a onclick="clearFileInputField('uploadFile_div')" href="javascript:noAction();" class="btn btn-sm btn-danger">Clear</a>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-5">
+                    <small id="emailHelp" class="form-text text-muted">Only select department when restricting document to a specific department.</small>
+                    @Html.DropDownListFor(x => Model.Department, new SelectList(ViewBag.Department, "Value", "Text", ""), htmlAttributes: new { @class = "form-control", id = "Department" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-5">
+                    <label asp-for="UploadComment" class="col-form-label"></label>
+                    <input asp-for="UploadComment" class="form-control" />
+                    <span asp-validation-for="UploadComment" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <button type="submit" class="btn btn-primary btn-sm mx-1">Uplaod</button>
+                <a asp-action="index" class="btn btn-sm btn-danger ">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        function clearFileInputField(tagId) {
+            document.getElementById(tagId).innerHTML =
+                document.getElementById(tagId).innerHTML;
+        }
+
+    </script>
+}

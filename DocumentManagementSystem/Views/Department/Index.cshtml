@@ -1,0 +1,80 @@
+﻿@model IEnumerable<DepartmentViewModel>
+
+@{
+    ViewBag.Title = "Departments";
+}
+<div class="">
+    <h4 class="h5">Departments</h4>
+    <a asp-controller="department" asp-action="createDepartment" class="btn btn-primary btn-sm mb-2">Create Department</a>
+    @if (TempData["message"] != null)
+    {
+        <div classs="container p-0 ">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    }
+</div>
+<div class="col-sm-10 card mt-1 p-3">
+    
+    @if (Model.Any())
+    {
+
+        <table class=" table table-hover table-responsive-sm table-responsive table-xs">
+            <thead>
+                <tr>
+                    <td hidden>#</td>
+                    <td>Name</td>
+                    <td>IsActive</td>
+                    <td>CreatedBy</td>
+                    <td>Date&nbsp;Created</td>
+                    <td>Edit/Delete</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var department in Model)
+                {
+                    <tr>
+                        <td hidden>@department.DepartmentId</td>
+                        <td>@department.Name</td>
+                        <td>@department.Status</td>
+                        <td>@department.SubmittedBy</td>
+                        <td>@department.DateCreated.ToShortDateString()</td>
+                        <td>
+                            <form asp-action="deleteDepartments" asp-route-id="@department.DepartmentId" method="post">
+                                <a asp-action="editDepartment" asp-controller="department" asp-route-id="@department.DepartmentId" class="btn btn-primary btn-sm mr-2">Edit</a>
+                                <span id="confirmDeleteSpan_@department.DepartmentId" style="display:none;">
+                                    <span>Confirm delete?</span>
+                                    <button type="submit" class="btn btn-danger btn-sm">Yes</button>
+                                    <a href="#" class="btn btn-primary btn-sm" onclick="confirmDelete('@department.DepartmentId', false);">No</a>
+                                </span>
+                                <span id="deleteSpan_@department.DepartmentId">
+                                    <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('@department.DepartmentId', true);">Delete</a>
+                                </span>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                No department available
+            </div>
+            <div class="card-body">
+                Use the button below to add department
+            </div>
+            <div class="card-footer">
+                <a asp-action="createDepartment" asp-controller="department" class="btn btn-primary btn-sm">Add Department</a>
+            </div>
+        </div>
+    }
+
+
+</div>

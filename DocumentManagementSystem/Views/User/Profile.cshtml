@@ -1,0 +1,88 @@
+﻿@model EditStaffViewModel
+
+@{
+    ViewBag.Title = "Profile";
+    var photoPath = "~/images/" + (Model.OldPhotoPath ?? "no-image.jpg");
+}
+<div class="col-sm-10">
+    <h4 class="h5 text-primary">Profile Information</h4>
+    <div class="card-header">
+        Personal Details
+    </div>
+    <div class="card-body">
+        <div class="form-group row" hidden>
+            <input asp-for="@Model.Id" readonly class="form-control" />
+            <input asp-for="@Model.Email" readonly class="form-control" />
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Name" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <label class="col-form-label">@Model.Name </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.PhoneNumber" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <label class="col-form-label">@Model.PhoneNumber  </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Email" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <label class="col-form-label ">@Model.Email  </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Gender" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <label class="col-form-label">@Model.Gender  </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.DOB" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <label class="col-form-label">@Model.DOB.Date.ToShortDateString()  </label>
+            </div>
+        </div>
+       
+        <div class="form-group row">
+            <label asp-for="@Model.Department" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <label class="col-form-label">@Model.Department  </label>
+            </div>
+        </div>
+       
+        <div class="form-group row">
+            <label asp-for="@Model.State" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <label class="col-form-label ">@Model.State </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Lga" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <label class="col-form-label">@Model.Lga  </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Address" class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <label class="col-form-label">@Model.Address  </label>
+            </div>
+        </div>
+        <hr />
+       
+        <div class="form-group row">
+            <label class="col-form-label col-sm-2">Passport</label>
+            <div class="col-sm-10">
+                <img src="@photoPath" asp-append-version="true" width="200" height="200" />
+            </div>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <a asp-action="editstaff" asp-route-id="@Model.Id" class="btn btn-primary btn-sm">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
