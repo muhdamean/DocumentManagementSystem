@@ -3,6 +3,7 @@ using DocumentManagementSystem.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
@@ -32,6 +33,16 @@ namespace DocumentManagementSystem
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //heroku 
+            services.AddHttpsRedirection(options => { options.HttpsPort = 443; });
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
+
             services.AddDbContextPool<AppDbContext>(option => option.UseNpgsql(Configuration.GetConnectionString("DMSCon"), b => b.MigrationsAssembly("DocumentManagementSystem")).UseLowerCaseNamingConvention());
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -95,6 +106,12 @@ namespace DocumentManagementSystem
             }
             else
             {
+                if (env.IsProduction())
+                {
+                    app
+                        .UseForwardedHeaders()
+                        .UseHttpsRedirection();
+                }
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
