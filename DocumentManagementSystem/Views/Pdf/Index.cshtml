@@ -13,7 +13,7 @@
 
 <div class="card p-3">
     <h4 class="h5 text-primary">Create Your Document</h4>
-    <form method="post" formaction="/">
+    <form method="post" formaction="">
         <div class="col-sm-10">
             <div class="form-group">
                 <label>Document Orientation</label>
@@ -27,8 +27,8 @@
                 <textarea asp-for="Message" id="mytextarea" rows="18"></textarea>
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary btn-sm" formaction="@Url.Action("print","pdf")">Preview & Print</button>
-            <button type="submit" class="btn btn-success btn-sm" formaction="@Url.Action("index","pdf")">Download</button>
+            <button type="submit" class="btn btn-primary btn-sm" formaction="https://doc-mgt-system.herokuapp.com/pdf/print/">Preview & Print</button>
+            <button type="submit" class="btn btn-success btn-sm" formaction="https://doc-mgt-system.herokuapp.com/pdf/index/">Download</button>
         </div>
     </form>
 </div>
