@@ -1,4 +1,9 @@
-﻿using DocumentManagementSystem.Models.ViewModels;
+﻿using DocumentManagementSystem.Models;
+using DocumentManagementSystem.Models.ViewModels;
+using DocumentManagementSystem.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Rotativa.AspNetCore;
 using System;
@@ -8,15 +13,26 @@ using System.Threading.Tasks;
 
 namespace DocumentManagementSystem.Controllers
 {
+    [AllowAnonymous]
     public class PdfController : Controller
     {
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly AppDbContext _db;
+        private readonly IWebHostEnvironment webHostEnvironment;
+        public PdfController(UserManager<ApplicationUser> userManager, AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
+        {
+            this.userManager = userManager;
+            this._db = appDbContext;
+            this.webHostEnvironment = webHostEnvironment;
+        }
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Index(PdfViewModel model)
         {
             if (ModelState.IsValid)
@@ -54,6 +70,7 @@ namespace DocumentManagementSystem.Controllers
         }
        
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Print(PdfViewModel model)
         {
             TempData["data"] = model.Message;
@@ -89,6 +106,7 @@ namespace DocumentManagementSystem.Controllers
             }
         }
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Download()
         {
             return new ViewAsPdf("download");
