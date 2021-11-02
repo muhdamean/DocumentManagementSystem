@@ -32,7 +32,7 @@ namespace DocumentManagementSystem.Controllers
             return View();
         }
         [HttpPost]
-        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(PdfViewModel model)
         {
             if (ModelState.IsValid)
@@ -70,7 +70,7 @@ namespace DocumentManagementSystem.Controllers
         }
        
         [HttpPost]
-        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public IActionResult Print(PdfViewModel model)
         {
             TempData["data"] = model.Message;
@@ -106,7 +106,7 @@ namespace DocumentManagementSystem.Controllers
             }
         }
         [HttpGet]
-        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public IActionResult Download()
         {
             return new ViewAsPdf("download");
