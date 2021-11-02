@@ -47,13 +47,13 @@ namespace DocumentManagementSystem.Controllers
             return View(departments);
         }
         [HttpGet]
-        //[Authorize(Policy = "CreateRolePolicy")]
+        [Authorize(Policy = "CreateRolePolicy")]
         public IActionResult CreateDepartment()
         {
             return View();
         }
         [HttpPost]
-        //[Authorize(Policy = "CreateRolePolicy")]
+        [Authorize(Policy = "CreateRolePolicy")]
         public async Task<IActionResult> CreateDepartment(DepartmentViewModel model)
         {
             if (ModelState.IsValid)
@@ -81,7 +81,7 @@ namespace DocumentManagementSystem.Controllers
             return View(model);
         }
         [HttpGet]
-        //[Authorize(Policy = "EditRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public  IActionResult EditDepartment(int id)
         {
             var dept = _db.Departments.FindAsync(id);
@@ -105,7 +105,7 @@ namespace DocumentManagementSystem.Controllers
             
         }
         [HttpPost]
-        //[Authorize(Policy = "EditRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditDepartment(DepartmentViewModel model)
         {
             if (ModelState.IsValid)

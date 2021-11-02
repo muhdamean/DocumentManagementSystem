@@ -1,6 +1,7 @@
 ﻿using DocumentManagementSystem.Models;
 using DocumentManagementSystem.Models.ViewModels;
 using DocumentManagementSystem.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

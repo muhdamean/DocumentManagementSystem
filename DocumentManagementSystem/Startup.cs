@@ -70,14 +70,15 @@ namespace DocumentManagementSystem
             {
                 options.LoginPath = new PathString("/home/signin");
                 options.LogoutPath = new PathString("/home/index");
-                options.AccessDeniedPath = new PathString("/admin/accessdenied");
+                options.AccessDeniedPath = new PathString("/user/accessdenied");
             });
 
             services.AddAuthorization(options =>
             {
                 //Claims Policy
                 options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Role", "true"));
-               
+                options.AddPolicy("EditRolePolicy", policy => policy.RequireClaim("Edit Role", "true"));
+
                 //options.AddPolicy("EditRolePolicy", policy => policy.AddRequirements(new ManageAdminRolesAndClaimsRequiement())); //custom auth with no personal role edit
 
                 //options.AddPolicy("EditRolePolicy", policy => policy.RequireAssertion(context=>context.User.IsInRole("Admin")&& 
@@ -86,7 +87,7 @@ namespace DocumentManagementSystem
                 options.AddPolicy("CreateRolePolicy", policy => policy.RequireClaim("Create Role", "true"));
 
                 //Role Policy
-                options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin", "Super Admin", "HOD", "User")); // dot RequireRole("Admin","User","Manager") for multiple roles in the policy
+                options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin","Staff", "HOD", "User")); // dot RequireRole("Admin","User","Manager") for multiple roles in the policy
             });
             services.Configure<RouteOptions>(options =>
             {
@@ -113,8 +114,8 @@ namespace DocumentManagementSystem
                         .UseHttpsRedirection();
                     
                 }
-                app.UseDeveloperExceptionPage();
-                //app.UseExceptionHandler("/Home/Error");
+                //app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

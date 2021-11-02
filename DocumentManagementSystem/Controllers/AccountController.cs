@@ -71,11 +71,11 @@ namespace DocumentManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(model.Email);
-                if (user != null && !user.EmailConfirmed && (await userManager.CheckPasswordAsync(user, model.Password)))
-                {
-                    ModelState.AddModelError(string.Empty, "Email not confirmed yet");
-                    return View(model);
-                }
+                //if (user != null && !user.EmailConfirmed && (await userManager.CheckPasswordAsync(user, model.Password)))
+                //{
+                //    ModelState.AddModelError(string.Empty, "Email not confirmed yet");
+                //    return View(model);
+                //}
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
@@ -254,14 +254,15 @@ namespace DocumentManagementSystem.Controllers
                     //send mail
                     //mailRequest.Subject = "Email Confirmation";
                     //mailRequest.ToEmail = ApplicationUsers.Email;
-                    //mailRequest.Body = $@"<p>Hi {ApplicationUsers.FullName}, your registration with Staff ID {ApplicationUsers.StaffID} is recieved.</p>
+                    //mailRequest.Body = $@"<p>Hi {ApplicationUsers.FullName}, your registration with Email {ApplicationUsers.StaffID} is recieved.</p>
                     //                        <p>Kindly click on the link below to confirm your email <br/></p>
                     //                     <a href={confirmationLink}>Confirm your email</a>.<br/><br/>
                     //                    Please kindly disregard this email if you did not initiate the above.  Thanks!<br/>";
                     //await mailService.SendEmailAsync(mailRequest);
 
                     ViewBag.ErrorTitle = "Registration successful";
-                    ViewBag.ErrorMessage = "Confirmation link has been sent to your email, please confirm your email";
+                    ViewBag.ErrorMessage = "Congrats! Your registration was successful, you can now login.";
+                    //ViewBag.ErrorMessage = "Confirmation link has been sent to your email, please confirm your email";
                     return View("Error");
                 }
                 foreach (var error in result.Errors)

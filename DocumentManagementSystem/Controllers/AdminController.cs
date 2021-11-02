@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace DocumentManagementSystem.Controllers
 {
-    
+    [Authorize(Policy = "AdminRolePolicy")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -167,7 +167,7 @@ namespace DocumentManagementSystem.Controllers
             return View(role);
         }
         [HttpGet]
-        //[Authorize(Policy = "EditRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
@@ -191,7 +191,7 @@ namespace DocumentManagementSystem.Controllers
             return View(model);
         }
         [HttpPost]
-        //[Authorize(Policy = "EditRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await roleManager.FindByIdAsync(model.RoleId);
@@ -220,7 +220,7 @@ namespace DocumentManagementSystem.Controllers
             return View(model);
         }
         [HttpPost]
-        //[Authorize(Policy = "DeleteRolePolicy")]
+        [Authorize(Policy = "DeleteRolePolicy")]
         public async Task<IActionResult> DeleteRole(string id)
         {
             if (ModelState.IsValid)
@@ -288,7 +288,7 @@ namespace DocumentManagementSystem.Controllers
             return View(model);
         }
         [HttpPost]
-        //[Authorize(Policy = "EditRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> ManageUserClaims(UserClaimsViewModel model)
         {
             var user = await userManager.FindByIdAsync(model.UserId);
@@ -313,7 +313,7 @@ namespace DocumentManagementSystem.Controllers
             return RedirectToAction("editStaff", "user", new { Id = model.UserId });
         }
         [HttpGet]
-        //[Authorize(Policy = "EditRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewBag.userId = roleId;
@@ -344,7 +344,7 @@ namespace DocumentManagementSystem.Controllers
             return View(model);
         }
         [HttpPost]
-        //[Authorize(Policy = "EditRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
@@ -410,6 +410,7 @@ namespace DocumentManagementSystem.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Policy = "AdminRolePolicy")]
         public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
@@ -434,6 +435,7 @@ namespace DocumentManagementSystem.Controllers
             return RedirectToAction("editstaff", "user", new { Id = userId });
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLga(string state)
         {
             var lgaList = new List<SelectListItem>();

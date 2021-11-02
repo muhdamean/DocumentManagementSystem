@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+@inject SignInManager<ApplicationUser> signInManager;
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -135,30 +136,44 @@
                         </ul>
                         <ul class="nav-right">
                             @*<li class="">
-                                    <a href="#">About</a>
+            <a href="#">About</a>
+        </li>
+        <li class="">
+            <a href="#">Contact</a>
+        </li>*@
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <li>
+                                    <a asp-action="index" asp-controller="admin">
+                                        <span class="pcoded-micon"><i class="ti-home"></i></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Dashboard</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
                                 </li>
-                                <li class="">
-                                    <a href="#">Contact</a>
-                                </li>*@
-                            <li>
-                                <a asp-action="signin" asp-controller="account">
-                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Sign In</span>
-                                    <span class="pcoded-mcaret"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-action="signup" asp-controller="account">
-                                    <span class="pcoded-micon"><i class="ti-user"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Sign Up</span>
-                                    <span class="pcoded-mcaret"></span>
-                                </a>
-                            </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-action="signin" asp-controller="account">
+                                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Sign In</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-action="signup" asp-controller="account">
+                                        <span class="pcoded-micon"><i class="ti-user"></i></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Sign Up</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                            }
+
                         </ul>
                     </div>
                 </div>
             </nav>
-            <div class="pcoded-main-container ">
+            <div class="pcoded-main-container " id="bgColor">
                 <div class="pcoded-wrapper">
                     <div class="">
                         <div class="">

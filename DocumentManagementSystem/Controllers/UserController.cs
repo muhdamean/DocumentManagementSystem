@@ -39,7 +39,7 @@ namespace DocumentManagementSystem.Controllers
             return View(users);
         }
         [HttpGet]
-        //[Authorize(Policy = "CreateRolePolicy")]
+        [Authorize(Policy = "CreateRolePolicy")]
         public async Task<IActionResult> CreateStaff()
         {
             //gender list
@@ -68,7 +68,7 @@ namespace DocumentManagementSystem.Controllers
             return View();
         }
         [HttpPost]
-        //[Authorize(Policy = "CreateRolePolicy")]
+        [Authorize(Policy = "CreateRolePolicy")]
         public async Task<IActionResult> CreateStaff(CreateStaffViewModel model)
         {
             if (ModelState.IsValid)
@@ -109,7 +109,8 @@ namespace DocumentManagementSystem.Controllers
                     var confirmationLink = Url.Action("confirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
                    // logger.Log(LogLevel.Warning, confirmationLink);
                     ViewBag.ErrorTitle = "Registration successful";
-                    ViewBag.ErrorMessage = "Confirmation link has been sent to your email, please confirm your email";
+                    ViewBag.ErrorMessage= "Congrats! Your registration was successful, you can now login.";
+                    //ViewBag.ErrorMessage = "Confirmation link has been sent to your email, please confirm your email";
                     return View("error");
                 }
                 foreach (var error in result.Errors)
@@ -121,7 +122,7 @@ namespace DocumentManagementSystem.Controllers
             return View();
         }
         [HttpGet]
-        //[Authorize(Policy = "EditRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditStaff(string id)
         {
             var user = await userManager.FindByIdAsync(id);
@@ -175,7 +176,7 @@ namespace DocumentManagementSystem.Controllers
             return View(model);
         }
         [HttpPost]
-        //[Authorize(Policy = "EditRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditStaff(EditStaffViewModel model)
         {
             var user = await userManager.FindByIdAsync(model.Id);
@@ -250,8 +251,14 @@ namespace DocumentManagementSystem.Controllers
             };
             return View(model);
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
         [HttpPost]
-        //[Authorize(Policy = "DeleteRolePolicy")]
+        [Authorize(Policy = "DeleteRolePolicy")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             if (ModelState.IsValid)
