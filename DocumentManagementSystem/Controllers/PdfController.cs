@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DocumentManagementSystem.Controllers
 {
-    [AllowAnonymous]
+    
     public class PdfController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -32,7 +32,7 @@ namespace DocumentManagementSystem.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public IActionResult Index(PdfViewModel model)
         {
             if (ModelState.IsValid)
@@ -70,7 +70,7 @@ namespace DocumentManagementSystem.Controllers
         }
        
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public IActionResult Print(PdfViewModel model)
         {
             TempData["data"] = model.Message;
@@ -106,7 +106,7 @@ namespace DocumentManagementSystem.Controllers
             }
         }
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public IActionResult Download()
         {
             return new ViewAsPdf("download");
