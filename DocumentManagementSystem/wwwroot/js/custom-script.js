@@ -9,10 +9,11 @@ $(document).ready(function () {
             lga.append($('<option>', { value: '', text: '---- Select LGA ----' }, '</option>'));
             lga.prop('disabled', true);
             lga.val("");
-        }
+        } 
         else {
+            /*https://localhost:44319/admin/GetLga*/
             $.ajax({
-                url: "https://localhost:44319/admin/GetLga",
+                url: "https://doc-mgt-system.herokuapp.com/admin/GetLga",
                 method: "GET",
                 data: { state: $(this).val() },
                 success: function (data) {
