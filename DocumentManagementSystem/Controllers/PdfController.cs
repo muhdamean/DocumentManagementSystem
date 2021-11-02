@@ -25,6 +25,7 @@ namespace DocumentManagementSystem.Controllers
                 TempData["orientation"] = model.Orientation;
 
                 
+
                 if (model.Orientation == "Landscape")
                 {
                     var viewLandscape = new ViewAsPdf("download")
