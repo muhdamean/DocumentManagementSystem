@@ -27,8 +27,8 @@
                 <textarea asp-for="Message" id="mytextarea" rows="18"></textarea>
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary btn-sm" formaction="print">Preview & Print</button>
-            <button type="submit" class="btn btn-success btn-sm" formaction="index">Download</button>
+            <button type="submit" class="btn btn-primary btn-sm" formaction="@Url.Action("print","pdf")">Preview & Print</button>
+            <button type="submit" class="btn btn-success btn-sm" formaction="@Url.Action("index","pdf")">Download</button>
         </div>
     </form>
 </div>
