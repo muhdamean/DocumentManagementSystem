@@ -243,9 +243,9 @@ namespace DocumentManagementSystem.Controllers
                     Address=model.Address,
                     IsActive=true,
                     Department=model.Department,
-                    Date=DateTime.Now.Date
+                    Date=DateTime.Now.Date 
                 };
-                var result = await userManager.CreateAsync(user, model.PhoneNumber);
+                var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -253,7 +253,7 @@ namespace DocumentManagementSystem.Controllers
                     //logger.Log(LogLevel.Warning, confirmationLink);
                     //send mail
                     //mailRequest.Subject = "Email Confirmation";
-                    //mailRequest.ToEmail = ApplicationUsers.Email;
+                    //mailRequest.ToEmail = ApplicationUsers.Email; 
                     //mailRequest.Body = $@"<p>Hi {ApplicationUsers.FullName}, your registration with Email {ApplicationUsers.StaffID} is recieved.</p>
                     //                        <p>Kindly click on the link below to confirm your email <br/></p>
                     //                     <a href={confirmationLink}>Confirm your email</a>.<br/><br/>
